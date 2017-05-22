@@ -10,18 +10,15 @@ SATIS_DIR=$(ROOT_DIR)/satis
 SATIS_VERSION=1.0.0-alpha3
 PROJECT_NAME=satis
 
+build-and-run: clean-build run
+
+run:
+	docker-compose --project-name $(PROJECT_NAME) up
+
+clean-build: clean clone-satis build
+
 clean:
 	rm -rf $(BUILD_DIR)
-
-ensure-build-dir:
-	mkdir -p $(BUILD_DIR)
-
-clone-satis:
-	[ -z "$$(ls -A $(SATIS_DIR))" ] && \
-	git clone https://github.com/composer/satis $(SATIS_DIR) && \
-	cd $(SATIS_DIR) && \
-	git checkout $(SATIS_VERSION) || \
-	echo "Nothing to clone"
 
 build: ensure-build-dir clone-satis
 	cp -R $(SATIS_DIR) $(BUILD_DIR)/satis && \
@@ -39,10 +36,12 @@ build: ensure-build-dir clone-satis
 	cd $(BUILD_DIR)/gearman && \
 	docker build -t $(GEARMAN_IMAGE_TAG) .
 
-clean-build: clean clone-satis build
-	
-run:
-	docker-compose --project-name $(PROJECT_NAME) up
+clone-satis:
+	[ -z "$$(ls -A $(SATIS_DIR))" ] && \
+	git clone https://github.com/composer/satis $(SATIS_DIR) && \
+	cd $(SATIS_DIR) && \
+	git checkout $(SATIS_VERSION) || \
+	echo "Nothing to clone"
 
-build-and-run: clean-build run
-
+ensure-build-dir:
+	mkdir -p $(BUILD_DIR)
