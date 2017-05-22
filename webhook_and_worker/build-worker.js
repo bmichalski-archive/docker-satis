@@ -8,7 +8,7 @@ const _ = require('lodash')
 if (!(_.has(process.env, 'GITHUB_WEBHOOK_SECRET_TOKEN')
   && process.env.GITHUB_WEBHOOK_SECRET_TOKEN !== null
   && process.env.GITHUB_WEBHOOK_SECRET_TOKEN !== '')) {
-  throw new Error('Missing environment variable GITHUB_WEBHOOK_SECRET_TOKEN')
+  throw new Error('Missing GITHUB_WEBHOOK_SECRET_TOKEN environment variable')
 }
 
 const worker = gearman('gearman', 4730)
