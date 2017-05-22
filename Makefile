@@ -1,4 +1,4 @@
-.PHONY: clean build clean-build run build-and-run ensure-build-dir clone-satis
+.PHONY: clean build clean-build run build-and-run ensure-build-dir clone-satis satis-rebuild-all
 
 BASE_IMAGE_TAG=bmichalski/satis-base
 APP_IMAGE_TAG=bmichalski/satis-app
@@ -45,3 +45,6 @@ clone-satis:
 
 ensure-build-dir:
 	mkdir -p $(BUILD_DIR)
+
+satis-rebuild-all:
+	docker exec -it satis_app_1 su - satis -c "cd app && rm -rf web/* && php bin/satis build ~/conf/satis.json web"
