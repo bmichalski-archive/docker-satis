@@ -4,14 +4,12 @@ services:
   app:
     image: 'bmichalski/satis-app'
     environment:
-      - 'ID_RSA_FILE'
-      - 'ID_RSA_PUB_FILE'
       - 'COMPOSER_GITHUB_OAUTH_TOKEN'
       - 'GITHUB_WEBHOOK_SECRET_TOKEN'
     volumes:
       - 'satis-web:/home/satis/app/web'
       - '/home/satis/.composer/cache'
-      - './conf:/home/satis/conf:ro'
+      - '${SATIS_JSON_FILE}:/home/satis/conf/satis.json:ro'
       - '${ID_RSA_FILE}:/home/satis/.ssh/id_rsa:ro'
       - '${ID_RSA_PUB_FILE}:/home/satis/.ssh/id_rsa.pub:ro'
     depends_on:
