@@ -1,5 +1,6 @@
-#bmichalski/docker-satis
-##A set of docker containers for composer/satis
+# bmichalski/docker-satis
+
+## A set of docker containers for composer/satis
 
 ### Quickstart
 Create a conf/satis.json file containing configuration. See https://getcomposer.org/doc/articles/handling-private-packages-with-satis.md.
