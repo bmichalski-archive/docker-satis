@@ -1,18 +1,19 @@
 FROM bmichalski/satis-base
 
-#Prep nodejs install
 RUN \
-  curl -sL https://deb.nodesource.com/setup_7.x | bash
+  apt-get install -y \
+    tzdata
 
 RUN \
   apt-get install -y \
-    php7.0-cli \
-    php7.0-curl \
-    php7.0-dom \
-    php7.0-mbstring \
-    php7.0-zip \
+    php-cli \
+    php-curl \
+    php-dom \
+    php-mbstring \
+    php-zip \
     git \
-    nodejs
+    nodejs \
+    npm
 
 #Create satis user
 RUN \
@@ -23,9 +24,10 @@ RUN \
   mkdir /home/satis/bin && \
   cd /home/satis/bin && \
   php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
-  php -r "if (hash_file('SHA384', 'composer-setup.php') === '669656bab3166a7aff8a7506b8cb2d1c292f042046c5a994c43155c0be6190fa0355160742ab2e1c88d40d5be660b410') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
-  php composer-setup.php --filename=composer && \
-  rm composer-setup.php
+  php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;" && \
+  php composer-setup.php && \
+  rm composer-setup.php && \
+  mv composer.phar composer
 
 #Add composer parallel install plugin
 RUN \
@@ -35,7 +37,6 @@ RUN \
 COPY satis /home/satis/app
 RUN chown -R satis:satis /home/satis/app
 #Install Satis app dependencies
-#FIXME Should be composer install but composer.json and .lock are not synced
 RUN \
   su - satis -c "cd /home/satis/app && composer update --optimize-autoloader --no-dev"
 
@@ -47,7 +48,7 @@ RUN \
   su - satis -c "cd /home/satis/webhook_and_worker && npm install"
 
 #Fix PHP CLI configuration
-RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/7.0/cli/php.ini
+RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php/7.2/cli/php.ini
 #Configure SSH known hosts
 COPY conf/home/satis/.ssh/known_hosts /home/satis/.ssh/known_hosts
 

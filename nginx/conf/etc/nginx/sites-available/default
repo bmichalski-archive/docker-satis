@@ -1,13 +1,21 @@
 server {
-  listen 80;
+  listen 8080;
 
   location / {
-    return 444;
+    return 404;
   }
 
   location /satis {
     alias /home/satis/app/web;
     index index.html;
+  }
+}
+
+server {
+  listen 8081;
+
+  location / {
+    return 404;
   }
 
   location /satis/build {

@@ -7,7 +7,7 @@ GEARMAN_IMAGE_TAG=bmichalski/satis-gearman
 ROOT_DIR=$(CURDIR)
 BUILD_DIR=$(ROOT_DIR)/build
 SATIS_DIR=$(ROOT_DIR)/satis
-SATIS_VERSION=1.0.0-alpha3
+SATIS_VERSION=1.0.0
 PROJECT_NAME=satis
 
 build-and-run: clean-build run

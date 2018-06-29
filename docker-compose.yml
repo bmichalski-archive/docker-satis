@@ -9,9 +9,7 @@ services:
     volumes:
       - 'satis-web:/home/satis/app/web'
       - '/home/satis/.composer/cache'
-      - '${SATIS_JSON_FILE}:/home/satis/conf/satis.json:ro'
-      - '${ID_RSA_FILE}:/home/satis/.ssh/id_rsa:ro'
-      - '${ID_RSA_PUB_FILE}:/home/satis/.ssh/id_rsa.pub:ro'
+      - '${SATIS_JSON_FILE}:/home/satis/conf/satis.json'
     depends_on:
       - 'gearman'
   nginx:
@@ -19,7 +17,8 @@ services:
     volumes:
       - 'satis-web:/home/satis/app/web'
     ports:
-      - 80:80
+      - ${SATIS_PORT}:8080
+      - ${SATIS_BUILD_PORT}:8081
   gearman:
     image: 'bmichalski/satis-gearman'
 

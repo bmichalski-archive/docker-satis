@@ -7,10 +7,9 @@ Create a conf/satis.json file containing configuration. See https://getcomposer.
 
 Customize and export the following environment variables:
 ```bash
-export ID_RSA_FILE=/path/to/id_rsa
-export ID_RSA_PUB_FILE=/path/to/id_rsa.pub
 export COMPOSER_GITHUB_OAUTH_TOKEN=composer_github_oauth_token
 export GITHUB_WEBHOOK_SECRET_TOKEN=github_webhook_secret_token
+export SATIS_JSON_FILE=/path/to/satis.json
 
 make build-and-run
 ```
