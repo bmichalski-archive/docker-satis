@@ -1,8 +1,7 @@
 FROM bmichalski/satis-base
 
-RUN \
-  apt-get install -y \
-    gearman-job-server
+RUN apt-get install -y \
+  gearman-job-server
 
 COPY conf/etc/supervisor /etc/supervisor
 

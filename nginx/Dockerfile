@@ -1,11 +1,8 @@
 FROM bmichalski/satis-base
 
-RUN \
-  apt-get install -y \
-    nginx
+RUN apt-get install -y nginx
 
-RUN \
-  adduser --disabled-password --gecos '' satis -u 1000
+RUN adduser --disabled-password --gecos '' satis -u 1000
 
 RUN \
   sed -i "s/# gzip_vary/gzip_vary/" /etc/nginx/nginx.conf && \

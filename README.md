@@ -13,6 +13,3 @@ export SATIS_JSON_FILE=/path/to/satis.json
 
 make build-and-run
 ```
-
-TODO
-* Add SSL support
